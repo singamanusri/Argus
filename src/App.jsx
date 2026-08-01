@@ -74,8 +74,17 @@ async function checkIP(ip) {
     <p>IOC: {selectedAlert.ioc}</p>
   </div>
 )}
+
+{ipReport && (
+  <div style={{ marginTop: "10px" }}>
+    <p>Abuse Confidence Score: {ipReport.abuseConfidenceScore}%</p>
+    <p>Total Reports: {ipReport.totalReports}</p>
+    <p>Country: {ipReport.countryCode}</p>
+    <p>ISP: {ipReport.isp}</p>
+    <p>Tor Exit Node: {ipReport.isTor ? "Yes" : "No"}</p>
+  </div>
+)}
     </div>
   );
 }
-
 export default App;
