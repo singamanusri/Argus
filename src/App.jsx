@@ -1,7 +1,4 @@
-
 import { useState } from "react";
-
-
 function getColor(severity) {
   if (severity === "critical") return "red";
   if (severity === "medium") return "orange";
@@ -33,15 +30,7 @@ const [ipReport, setIpReport] = useState(null);
     },
   ];
 async function checkIP(ip) {
-  const response = await fetch(
-    `https://api.abuseipdb.com/api/v2/check?ipAddress=${ip}`,
-    {
-      headers: {
-        Key: import.meta.env.VITE_ABUSEIPDB_KEY,
-        Accept: "application/json",
-      },
-    }
-  );
+  const response = await fetch(`/api/check-ip?ip=${ip}`);
   const data = await response.json();
   setIpReport(data.data);
 }
@@ -76,7 +65,6 @@ async function checkIP(ip) {
   </div>
 ))}
           
-
       {selectedAlert && (
   <div style={{ marginTop: "20px", padding: "10px", border: "2px solid white" }}>
     <h3>Alert Details</h3>
