@@ -5,10 +5,10 @@ function getColor(severity) {
   if (severity === "low") return "green";
   return "gray";
 }
-
 function App() {
   const [selectedAlert, setSelectedAlert] = useState(null);
   const [ipReport, setIpReport] = useState(null);
+  const [alertStatus, setAlertStatus] = useState({});
   const alerts = [
     {
       id: "ALT-1001",
@@ -91,6 +91,21 @@ function App() {
           <p>Title: {selectedAlert.title}</p>
           <p>Severity: {selectedAlert.severity}</p>
           <p>IOC: {selectedAlert.ioc}</p>
+          <p>Status: {alertStatus[selectedAlert.id] || "open"}</p>
+<div style={{ marginTop: "12px", display: "flex", gap: "10px", justifyContent: "center" }}>
+  <button
+    onClick={() => setAlertStatus({ ...alertStatus, [selectedAlert.id]: "resolved" })}
+    style={{ padding: "8px 16px", borderRadius: "6px", border: "1px solid #3FB950", backgroundColor: "transparent", color: "#3FB950", cursor: "pointer" }}
+  >
+    Mark Resolved
+  </button>
+  <button
+    onClick={() => setAlertStatus({ ...alertStatus, [selectedAlert.id]: "escalated" })}
+    style={{ padding: "8px 16px", borderRadius: "6px", border: "1px solid #E5484D", backgroundColor: "transparent", color: "#E5484D", cursor: "pointer" }}
+  >
+    Escalate to L2
+  </button>
+</div>
         </div>
       )}
 
