@@ -8,6 +8,7 @@ function getColor(severity) {
 function App() {
   const [selectedAlert, setSelectedAlert] = useState(null);
   const [ipReport, setIpReport] = useState(null);
+  const [loading, setLoading] = useState(false);
   const [alertStatus, setAlertStatus] = useState({});
   const alerts = [
     {
@@ -30,11 +31,13 @@ function App() {
     },
   ];
 
-  async function checkIP(ip) {
-    const response = await fetch(`/api/check-ip?ip=${ip}`);
-    const data = await response.json();
-    setIpReport(data.data);
-  }
+ async function checkIP(ip) {
+  setLoading(true);
+  const response = await fetch(`/api/check-ip?ip=${ip}`);
+  const data = await response.json();
+  setIpReport(data.data);
+  setLoading(false);
+}
 
   return (
     <div style={{
@@ -91,6 +94,7 @@ function App() {
           <p>Title: {selectedAlert.title}</p>
           <p>Severity: {selectedAlert.severity}</p>
           <p>IOC: {selectedAlert.ioc}</p>
+          {loading && <p style={{ color: "#8B949E" }}>Checking IP reputation...</p>}
           <p>Status: {alertStatus[selectedAlert.id] || "open"}</p>
 <div style={{ marginTop: "12px", display: "flex", gap: "10px", justifyContent: "center" }}>
   <button
